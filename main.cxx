@@ -2,11 +2,17 @@
 
 //http://www.opengl-tutorial.org/beginners-tutorials/tutorial-1-opening-a-window/
 
+void glfwErrorCallback(int error_code, const char* description)
+{
+	printf("[WARN]: glfwError(%d): %s\n", error_code, description);
+}
+
 int main()
 {
 	GLuint program = 0;
 	GLFWwindow* window = NULL;
 
+	glfwSetErrorCallback(glfwErrorCallback);
 	glewExperimental = true;
 	if (!glfwInit()) //Initialise GLFW
 	{
@@ -15,10 +21,11 @@ int main()
 	}
 
 	glfwWindowHint(GLFW_SAMPLES, 4); //4x antialiasing
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3); //OpenGL 3.3
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3); //OpenGL 3.3
-	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); //Forward Compatibility
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); //No Backward Compatibility
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2); //OpenGL 2.1
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1); //OpenGL 2.1
+	//glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); //Forward Compatibility Only
+	//glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); //No Backward Compatibility
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_ANY_PROFILE); //Backward Compatibility
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE); //Non-resizable
 
 	window = glfwCreateWindow(1024, 768, "GL Triangle", NULL, NULL);
@@ -60,12 +67,13 @@ int main()
 		glBindBuffer(GL_ARRAY_BUFFER, VertexBuffer);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(g_triangle), g_triangle, GL_STATIC_DRAW);
 
-		glEnableVertexAttribArray(0);
+		GLuint position = glGetAttribLocation(program, "position");
+		glEnableVertexAttribArray(position);
 		glBindBuffer(GL_ARRAY_BUFFER, VertexBuffer);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 		glUseProgram(program);
 		glDrawArrays(GL_TRIANGLES, 0, 3);
-		glDisableVertexAttribArray(0);
+		glDisableVertexAttribArray(position);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();

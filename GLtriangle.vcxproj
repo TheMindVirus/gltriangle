@@ -72,9 +72,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>C:\Users\Alastair\Documents\Visual Studio 2019\Projects\GLtriangle\GLtriangle\gl;C:\Users\Alastair\Documents\Visual Studio 2019\Projects\GLtriangle\GLtriangle\glm;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Alastair\Documents\Visual Studio 2019\Projects\GLtriangle\GLtriangle\gl;C:\Users\Alastair\Documents\Visual Studio 2019\Projects\GLtriangle\GLtriangle\glm;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>C:\Users\Alastair\Documents\Visual Studio 2019\Projects\GLtriangle\GLtriangle\gl;C:\Users\Alastair\Documents\Visual Studio 2019\Projects\GLtriangle\GLtriangle\glm;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Alastair\Documents\Visual Studio 2019\Projects\GLtriangle\GLtriangle\gl;C:\Users\Alastair\Documents\Visual Studio 2019\Projects\GLtriangle\GLtriangle\glm;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
