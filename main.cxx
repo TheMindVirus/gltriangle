@@ -2,11 +2,17 @@
 
 //http://www.opengl-tutorial.org/beginners-tutorials/tutorial-1-opening-a-window/
 
-int main()
+void glfwErrorCallback(int error_code, const char* description)
+{
+	printf("[WARN]: glfwError(%d): %s\n", error_code, description);
+}
+
+int main(int argc, char* argv[])
 {
 	GLuint program = 0;
 	GLFWwindow* window = NULL;
 
+	glfwSetErrorCallback(glfwErrorCallback);
 	glewExperimental = true;
 	if (!glfwInit()) //Initialise GLFW
 	{
