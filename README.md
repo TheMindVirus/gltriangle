@@ -1,5 +1,5 @@
 # gltriangle
-OpenGL Shader Code to display a multicoloured test triangle on a GL Context (Linux ARM) \
+OpenGL Shader Code to display a multicoloured test triangle on an EGL Context (Linux ARM) \
 https://github.com/raspberrypi/userland/tree/master/host_applications/linux/apps/hello_pi/hello_triangle2
 
 ### Disclaimer: This code has changed several times and will likely break again.
