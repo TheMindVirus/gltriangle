@@ -1,8 +1,0 @@
-﻿  main.cxx
-  main.hxx
-x64\Release\main.obj : warning LNK4042: object specified more than once; extras ignored
-  Generating code
-  Previous IPDB not found, fall back to full compilation.
-  All 207 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
-  Finished generating code
-  GLtriangle.vcxproj -> C:\Users\Alastair\Documents\Visual Studio 2019\Projects\GLtriangle\GLtriangle\x64\Release\GLtriangle.exe

@@ -1,0 +1,15 @@
+const GLchar* fragment_shader_source =
+"varying vec2 pos;"
+""
+"void main(void)"
+"{"
+"    if ((pos.y > -0.5)"
+"    &&  (pos.y < ( 2.0 * pos.x + 0.5))"
+"    &&  (pos.y < (-2.0 * pos.x + 0.5)))"
+"    {"
+"        gl_FragColor.r = 1.0 - distance(pos, vec2( 0.0,  0.5));"
+"        gl_FragColor.g = 1.0 - distance(pos, vec2(-0.5, -0.5));"
+"        gl_FragColor.b = 1.0 - distance(pos, vec2( 0.5, -0.5));"
+"    }"
+"    gl_FragColor.a = 0.8;"
+"}";

@@ -4,4 +4,4 @@ http://www.opengl-tutorial.org/beginners-tutorials/tutorial-1-opening-a-window/
 
 ### Disclaimer: This code has changed several times and will likely break again.
 
-![gltriangle](https://github.com/TheMindVirus/gltriangle/blob/main/gltriangle.png)
+![gltriangle](https://github.com/TheMindVirus/gltriangle/blob/pi3A/gltriangle.png)
