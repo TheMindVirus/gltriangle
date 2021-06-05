@@ -98,7 +98,7 @@
       </Command>
     </CustomBuildStep>
     <PreBuildEvent>
-      <Command>xcopy /Y shader.hlsl $(SolutionDir)$(Configuration)\</Command>
+      <Command>xcopy /Y "shader.hlsl" "$(SolutionDir)$(Configuration)\"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
