@@ -1,0 +1,7 @@
+﻿  C:shader.hlsl
+  1 File(s) copied
+  compilation object save succeeded; see C:\Users\Alastair\source\repos\DirectX-AdapterSelection\Debug\shader.cso
+  main.cxx
+C:\Users\Alastair\source\repos\DirectX-AdapterSelection\main.cxx(46,26): warning C4244: '=': conversion from 'SIZE_T' to 'FLOAT', possible loss of data
+C:\Users\Alastair\source\repos\DirectX-AdapterSelection\main.cxx(47,27): warning C4244: '=': conversion from 'SIZE_T' to 'FLOAT', possible loss of data
+  DirectX-AdapterSelection.vcxproj -> C:\Users\Alastair\source\repos\DirectX-AdapterSelection\Debug\DirectX-AdapterSelection.exe
