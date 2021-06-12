@@ -1,13 +1,20 @@
-#version 330 core
-
-out vec4 colour;
-
+precision highp float;
+varying vec2 pos;
 void main()
 {
-    vec2 pos = ((gl_FragCoord.xy / vec2(1024.0f, 768.0f)) * vec2(2.0f, -2.0f)) + vec2(-1.0f, 1.0f);
-    float r = 1.0f - distance(pos, vec2( 0.0f, -0.5f));
-    float g = 1.0f - distance(pos, vec2(-0.5f,  0.5f));
-    float b = 1.0f - distance(pos, vec2( 0.5f,  0.5f));
-    float a = 1.0f;
-	colour = vec4(r, g, b, a);
+    if ((pos.y > -0.5)
+    &&  (pos.y < (2.0 * pos.x + 0.5))
+    &&  (pos.y < (-2.0 * pos.x + 0.5)))
+    {
+        gl_FragColor.r = 1.0 - distance(pos, vec2(0.0, 0.5));
+        gl_FragColor.g = 1.0 - distance(pos, vec2(-0.5, -0.5));
+        gl_FragColor.b = 1.0 - distance(pos, vec2(0.5, -0.5));
+    }
+    else
+    {
+        gl_FragColor.r = 0.0;
+        gl_FragColor.g = 0.0;
+        gl_FragColor.b = 0.0;
+    }
+    gl_FragColor.a = 0.8;
 }
