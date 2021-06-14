@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>vec4 x mat4</title>
+        <script id="VertexSource1" type="x-shader/x-vertex">
+            attribute vec3 vertex;
+            attribute vec4 vector;
+            uniform mat4 matrix;
+            varying vec4 result;
+            void main()
+            {
+                gl_Position = vec4(vertex, 1.0);
+                gl_PointSize = 1.0;
+                result = matrix * vector;
+            }
+        </script>
+        <script id="VertexSource2" type="x-shader/x-vertex">
+            attribute vec3 vertex;
+            attribute vec4 vector;
+            uniform mat4 matrix;
+            varying vec4 result;
+            void main()
+            {
+                gl_Position = vec4(vertex, 1.0);
+                gl_PointSize = 1.0;
+                result = vector * matrix;
+                //result.x = vector[1];
+                //result.y = matrix[1][1];
+            }
+        </script>
+        <script id="FragmentSource" type="x-shader/x-fragment">
+            precision highp float;
+            varying vec4 result;
+            void main()
+            {
+                gl_FragColor = result;
+            }
+        </script>
+        <script>
+            window.onload = function()
+            {
+                var canvas = document.getElementById("canvas");
+                canvas.width = 1;
+                canvas.height = 1;
+                var gl = canvas.getContext("webgl");
+                if (!gl) { console.log("Error initialising WebGL"); return null; }
+                var shaderv1 = gl.createShader(gl.VERTEX_SHADER);
+                var shaderv2 = gl.createShader(gl.VERTEX_SHADER);
+                var shaderf = gl.createShader(gl.FRAGMENT_SHADER);
+                var VertexSource1 = document.getElementById("VertexSource1");
+                var VertexSource2 = document.getElementById("VertexSource2");
+                var FragmentSource = document.getElementById("FragmentSource");
+                var program1 = gl.createProgram();
+                var program2 = gl.createProgram();
+                gl.shaderSource(shaderv1, VertexSource1.text);
+                gl.shaderSource(shaderv2, VertexSource2.text);
+                gl.shaderSource(shaderf, FragmentSource.text);
+                gl.compileShader(shaderv1);
+                if (!gl.getShaderParameter(shaderv1, gl.COMPILE_STATUS)) { console.log(gl.getShaderInfoLog(shaderv1)); return null; }
+                gl.compileShader(shaderv2);
+                if (!gl.getShaderParameter(shaderv2, gl.COMPILE_STATUS)) { console.log(gl.getShaderInfoLog(shaderv2)); return null; }
+                gl.compileShader(shaderf);
+                if (!gl.getShaderParameter(shaderf, gl.COMPILE_STATUS)) { console.log(gl.getShaderInfoLog(shaderf)); return null; }
+                gl.attachShader(program1, shaderv1);
+                gl.attachShader(program1, shaderf);
+                gl.attachShader(program2, shaderv2);
+                gl.attachShader(program2, shaderf);
+                gl.linkProgram(program1);
+                if (!gl.getProgramParameter(program1, gl.LINK_STATUS)) { console.log(gl.getProgramInfoLog(program1)); return null; }
+                gl.linkProgram(program2);
+                if (!gl.getProgramParameter(program2, gl.LINK_STATUS)) { console.log(gl.getProgramInfoLog(program2)); return null; }
+                var vertex1 = gl.getAttribLocation(program1, "vertex");
+                var vertex2 = gl.getAttribLocation(program2, "vertex");
+                var vector1 = gl.getAttribLocation(program1, "vector");
+                var vector2 = gl.getAttribLocation(program2, "vector");
+                var matrix1 = gl.getUniformLocation(program1, "matrix");
+                var matrix2 = gl.getUniformLocation(program2, "matrix");
+                var vertexBuffer = gl.createBuffer();
+                var vectorBuffer = gl.createBuffer();
+                var vertices = new Float32Array([0.00, 0.00, 0.00]);
+                var dataA = new Float32Array([0.25, 0.50, 0.75, 1.00]);
+                var dataB = new Float32Array([0.00, 0.01, 0.02, 0.03, 0.10, 0.11, 0.12, 0.13, 0.20, 0.21, 0.22, 0.23, 0.30, 0.31, 0.32, 0.33]);
+                gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+                gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
+                gl.bindBuffer(gl.ARRAY_BUFFER, vectorBuffer);
+                gl.bufferData(gl.ARRAY_BUFFER, dataA, gl.STATIC_DRAW);
+                gl.useProgram(program1);
+                gl.viewport(0, 0, 1, 1);
+                gl.clearColor(1.0, 0.0, 0.0, 1.0);
+                gl.clear(gl.COLOR_BUFFER_BIT);
+                gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+                gl.vertexAttribPointer(vertex1, 3, gl.FLOAT, false, 0, 0);
+                gl.enableVertexAttribArray(vertex1);
+                gl.bindBuffer(gl.ARRAY_BUFFER, vectorBuffer);
+                gl.vertexAttribPointer(vector1, 4, gl.FLOAT, false, 0, 0);
+                gl.enableVertexAttribArray(vector1);
+                gl.uniformMatrix4fv(matrix1, false, dataB);
+                gl.drawArrays(gl.POINTS, 0, 1);
+                var dataC = new Uint8Array([0, 0, 0, 0]);
+                gl.readPixels(0, 0, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, dataC, 0);
+                gl.useProgram(program2);
+                gl.viewport(0, 0, 1, 1);
+                gl.clearColor(1.0, 0.0, 0.0, 1.0);
+                gl.clear(gl.COLOR_BUFFER_BIT);
+                gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+                gl.vertexAttribPointer(vertex2, 3, gl.FLOAT, false, 0, 0);
+                gl.enableVertexAttribArray(vertex2);
+                gl.bindBuffer(gl.ARRAY_BUFFER, vectorBuffer);
+                gl.vertexAttribPointer(vector2, 4, gl.FLOAT, false, 0, 0);
+                gl.enableVertexAttribArray(vector2);
+                gl.uniformMatrix4fv(matrix2, false, dataB);
+                gl.drawArrays(gl.POINTS, 0, 1);
+                var dataD = new Uint8Array([0, 0, 0, 0]);
+                gl.readPixels(0, 0, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, dataD, 0);
+                var tableA = document.getElementById("tableA");
+                var tableB = document.getElementById("tableB");
+                var tableC = document.getElementById("tableC");
+                var tableD = document.getElementById("tableD");
+                for (var i = 0; i < 4; ++i)
+                {
+                    tableA.children[0].children[0].children[i].innerText = parseFloat(dataA[i]).toFixed(2);
+                    for (var j = 0; j < 4; ++j)
+                    {
+                        tableB.children[0].children[3 - i].children[j].innerText = parseFloat(dataB[(j * 4) + i]).toFixed(2);
+                    }
+                    tableC.children[0].children[0].children[i].innerText = (parseFloat(dataC[i]) / 255.0).toFixed(2);
+                    tableD.children[0].children[0].children[i].innerText = (parseFloat(dataD[i]) / 255.0).toFixed(2);
+                }
+            }
+        </script>
+        <style>
+            * { box-sizing: border-box; margin: auto; text-align: center; overflow: hidden; font-family: sans-serif; font-weight: bold; color: white; }
+            body { background: black; }
+            table { background: red; margin-top: 10px; padding: 10px; }
+            canvas { width: 1px; height: 1px; }
+        </style>
+    <head>
+    <body>
+        <canvas id="canvas" width="1" height="1"></canvas>
+        <table id="tableA" cellpadding="5">
+            <tbody>
+                <tr>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+        <table id="tableB" cellpadding="5">
+            <tbody>
+                <tr>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+        <table id="tableC" cellpadding="5">
+            <tbody>
+                <tr>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+        <table id="tableD" cellpadding="5">
+            <tbody>
+                <tr>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</html>

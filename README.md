@@ -1,7 +1,4 @@
-# gltriangle
-OpenGL Shader Code to display a multicoloured test triangle on a GL Context (Windows x64) \
-http://www.opengl-tutorial.org/beginners-tutorials/tutorial-1-opening-a-window/
+gltraingle
+WebGL Shader Code to show what a load of old rubbish WebGL makes people write/generate.
 
-### Disclaimer: This code has changed several times and will likely break again.
-
-![gltriangle](https://github.com/TheMindVirus/gltriangle/blob/main/gltriangle.png)
+![screenshot](https://github.com/themindvirus/gltriangle/blob/webgl-qpu/screenshot.png)

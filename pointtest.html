@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>PointTest</title>
+        <script id="VertexSource" type="x-shader/x-vertex">
+            attribute vec3 vertex;
+            void main(void)
+            {
+                gl_Position = vec4(vertex, 1.0);
+                gl_PointSize = 1.0;
+            }
+        </script>
+        <script id="FragmentSource" type="x-shader/x-fragment">
+            void main(void)
+            {
+                gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
+            }
+        </script>
+        <script>
+            window.onload = function()
+            {
+                var canvas = document.getElementById("canvas");
+                //canvas.width = 1;
+                //canvas.height = 1;
+                var gl = canvas.getContext("experimental-webgl");
+                if (!gl) { console.log("Error initialising WebGL"); return null; }
+                var vertexBuffer = gl.createBuffer();
+                var vertices = new Float32Array([-0.5, 0.5, 0.0, 0.0, 0.5, 0.0, -0.25, 0.25, 0.0]);
+                gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+                gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
+                gl.bindBuffer(gl.ARRAY_BUFFER, null);
+                var shaderv = gl.createShader(gl.VERTEX_SHADER);
+                var shaderf = gl.createShader(gl.FRAGMENT_SHADER);
+                var VertexSource = document.getElementById("VertexSource");
+                var FragmentSource = document.getElementById("FragmentSource");
+                var program = gl.createProgram();
+                gl.shaderSource(shaderv, VertexSource.text);
+                gl.shaderSource(shaderf, FragmentSource.text);
+                gl.compileShader(shaderv);
+                if (!gl.getShaderParameter(shaderv, gl.COMPILE_STATUS)) { console.log(gl.getShaderInfoLog(shaderv)); return null; }
+                gl.compileShader(shaderf);
+                if (!gl.getShaderParameter(shaderf, gl.COMPILE_STATUS)) { console.log(gl.getShaderInfoLog(shaderf)); return null; }
+                gl.attachShader(program, shaderv);
+                gl.attachShader(program, shaderf);
+                gl.linkProgram(program);
+                if (!gl.getProgramParameter(program, gl.LINK_STATUS)) { console.log(gl.getProgramInfoLog(program)); return null; }
+                gl.useProgram(program);
+                gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+                var vertex = gl.getAttribLocation(program, "vertex");
+                gl.vertexAttribPointer(vertex, 3, gl.FLOAT, false, 0, 0);
+                gl.enableVertexAttribArray(vertex);
+                gl.viewport(0, 0, canvas.width, canvas.height);
+                gl.clearColor(1.0, 0, 0, 1.0);
+                gl.clear(gl.COLOR_BUFFER_BIT);
+                gl.drawArrays(gl.POINTS, 0, 3);
+            }
+        </script>
+        <style>
+            * { box-sizing: border-box; margin: auto; text-align: center; overflow: hidden; }
+            body { background: black; }
+        </style>
+    <head>
+    <body>
+        <canvas id="canvas" width="570" height="570"></canvas>
+    </body>
+</html>
