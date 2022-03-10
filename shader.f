@@ -1,0 +1,16 @@
+const GLchar* fragment_shader_source =
+"uniform sampler2D _Texture;\n"
+"\n"
+"varying float _Size;\n"
+"varying float _Frames;\n"
+"varying float _Frame;\n"
+"varying float _Steps;\n"
+"\n"
+"varying vec3 screen;\n"
+"varying vec3 pos;\n"
+"varying vec3 dir;\n"
+"\n"
+"void main(void)\n"
+"{\n"
+"    gl_FragColor = vec4(pos + 0.5, 0.5);\n"
+"}\n";
