@@ -1,0 +1,4 @@
+!!ARBfp1.0
+TEMP color;
+MOV result.color.a, 1.0;
+END

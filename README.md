@@ -1,14 +1,6 @@
-# glvolume
-OpenGL Shader Code to display a multicoloured rotating 3D volumetric cutout cube on an EGL Context (Pi3A)
+# arb-assembly
+OpenGL Assembly Loader to run ARB assembly instructions on a GLEW/GLFW WinGDI32 Context (Windows 10)
 
-### Disclaimer: This code has changed several times and will likely break again.
+### Disclaimer: This code uses outdated methods and shouldn't be used in modern apps.
 
-![glvolume](https://github.com/TheMindVirus/gltriangle/blob/glvolume-pi3a/glvolume.png)
-
-## Dependencies
-m, bcm_host, brcmEGL and brcmGLESv2 - aka graphics drivers, build the userland!
-https://github.com/raspberrypi/userland/
-
-## Issues
-There are many limitations including hard faults, iteration restrictions and random v3d lock-ups.
-All of them can be resolved with a reboot...
+![glarb](https://github.com/TheMindVirus/gltriangle/blob/arb-assembly/glarb.png)

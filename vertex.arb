@@ -1,0 +1,4 @@
+!!ARBvp1.0
+TEMP vc;
+MOV result.position, vc;
+END
